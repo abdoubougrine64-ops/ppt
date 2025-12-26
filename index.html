@@ -1,0 +1,599 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>الخصائص العامة للشريعة الإسلامية</title>
+    
+    <!-- استدعاء مكتبة الأيقونات محلياً -->
+    <link rel="stylesheet" href="assets/css/all.min.css">
+
+    <style>
+        /* تعريف الخطوط محلياً */
+        @font-face {
+            font-family: 'Cairo';
+            src: url('assets/fonts/Cairo-Regular.ttf') format('truetype');
+            font-weight: 400;
+            font-style: normal;
+        }
+        @font-face {
+            font-family: 'Cairo';
+            src: url('assets/fonts/Cairo-Bold.ttf') format('truetype');
+            font-weight: 700;
+            font-style: normal;
+        }
+        @font-face {
+            font-family: 'Amiri';
+            src: url('assets/fonts/Amiri-Regular.ttf') format('truetype');
+            font-weight: 400;
+            font-style: normal;
+        }
+        @font-face {
+            font-family: 'Amiri';
+            src: url('assets/fonts/Amiri-Bold.ttf') format('truetype');
+            font-weight: 700;
+            font-style: normal;
+        }
+
+        :root {
+            --primary-gold: #eebb5d; /* ذهبي مشرق */
+            --secondary-gold: #c5a059;
+            --text-white: #ffffff;
+            --text-dim: #dddddd;
+            --overlay-dark: rgba(0, 20, 10, 0.85);
+            --card-bg: rgba(255, 255, 255, 0.1); /* تأثير الزجاج */
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Cairo', sans-serif;
+            background-color: #1a1a1a;
+            color: var(--text-white);
+            height: 100vh;
+            overflow: hidden;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        /* حاوية العرض */
+        .presentation-container {
+            width: 100%;
+            height: 100%;
+            position: relative;
+            overflow: hidden;
+            background: #000;
+        }
+
+        /* الشرائح */
+        .slide {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.8s ease-in-out, transform 0.8s ease;
+            transform: scale(1.05);
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            z-index: 1;
+        }
+
+        .slide.active {
+            opacity: 1;
+            visibility: visible;
+            transform: scale(1);
+            z-index: 2;
+        }
+
+        /* طبقة التظليل فوق الصور */
+        .overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, rgba(0,0,0,0.9) 0%, rgba(20, 60, 40, 0.8) 100%);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 40px;
+            overflow-y: auto;
+        }
+
+        /* محتوى النص */
+        .content-box {
+            max-width: 1000px;
+            width: 90%;
+            background: var(--card-bg);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(238, 187, 93, 0.3);
+            border-radius: 20px;
+            padding: 40px 50px;
+            box-shadow: 0 15px 40px rgba(0,0,0,0.5);
+            margin-bottom: 60px;
+            animation: fadeInUp 0.8s ease-out;
+        }
+
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* تنسيق النصوص */
+        h1 {
+            font-family: 'Amiri', serif;
+            color: var(--primary-gold);
+            font-size: 3.5rem;
+            margin-bottom: 20px;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.5);
+            text-align: center;
+        }
+
+        h2 {
+            font-family: 'Amiri', serif;
+            font-size: 2.2rem;
+            color: var(--primary-gold);
+            border-bottom: 2px solid var(--secondary-gold);
+            display: inline-block;
+            padding-bottom: 10px;
+            margin-bottom: 25px;
+        }
+        
+        h3 {
+            font-size: 1.5rem;
+            color: #aedcc0;
+            margin: 25px 0 15px 0;
+            font-weight: 700;
+        }
+
+        p, li {
+            font-size: 1.25rem;
+            line-height: 1.8;
+            color: var(--text-white);
+            margin-bottom: 12px;
+        }
+
+        ul {
+            list-style-type: none;
+        }
+
+        ul li {
+            position: relative;
+            padding-right: 30px;
+            margin-bottom: 15px;
+        }
+
+        ul li::before {
+            content: '\f00c';
+            font-family: 'Font Awesome 6 Free';
+            font-weight: 900;
+            color: var(--primary-gold);
+            position: absolute;
+            right: 0;
+            top: 5px;
+        }
+
+        .quran-box, .hadith-box {
+            background-color: rgba(0, 0, 0, 0.3);
+            border-right: 4px solid var(--primary-gold);
+            padding: 20px 25px;
+            border-radius: 8px;
+            margin: 20px 0;
+            font-family: 'Amiri', serif;
+            font-size: 1.4rem;
+            line-height: 2;
+            position: relative;
+            color: #fff;
+        }
+
+        .quran-box::after {
+            content: '\f687';
+            font-family: 'Font Awesome 6 Free';
+            font-weight: 900;
+            position: absolute;
+            top: 15px;
+            left: 15px;
+            color: rgba(238, 187, 93, 0.2);
+            font-size: 2rem;
+        }
+
+        .source {
+            display: block;
+            margin-top: 10px;
+            font-size: 1rem;
+            color: var(--primary-gold);
+            font-family: 'Cairo', sans-serif;
+            font-weight: bold;
+            text-align: left;
+        }
+
+        .vocab-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 15px;
+            margin-top: 15px;
+        }
+
+        .vocab-item {
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 15px;
+            border-radius: 10px;
+            font-size: 1.1rem;
+            transition: background 0.3s;
+        }
+        .vocab-item:hover {
+            background: rgba(255, 255, 255, 0.15);
+            border-color: var(--primary-gold);
+        }
+
+        .vocab-term {
+            color: var(--primary-gold);
+            font-weight: bold;
+            font-family: 'Amiri', serif;
+            font-size: 1.3rem;
+            margin-left: 5px;
+        }
+
+        /* أدوات التحكم */
+        .controls {
+            position: absolute;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 20px;
+            z-index: 10;
+        }
+
+        .btn {
+            background-color: transparent;
+            color: var(--primary-gold);
+            border: 2px solid var(--primary-gold);
+            padding: 10px 30px;
+            font-family: 'Cairo', sans-serif;
+            font-size: 1.1rem;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-weight: bold;
+            backdrop-filter: blur(5px);
+        }
+
+        .btn:hover {
+            background-color: var(--primary-gold);
+            color: #000;
+            box-shadow: 0 0 15px var(--primary-gold);
+        }
+
+        .btn:disabled {
+            border-color: #555;
+            color: #555;
+            cursor: not-allowed;
+            box-shadow: none;
+        }
+
+        .progress-container {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 5px;
+            background: rgba(255,255,255,0.1);
+            z-index: 20;
+        }
+        .progress-bar {
+            height: 100%;
+            background: var(--primary-gold);
+            width: 0%;
+            transition: width 0.5s ease;
+            box-shadow: 0 0 10px var(--primary-gold);
+        }
+
+        .center-text {
+            text-align: center;
+        }
+        
+        .header-meta {
+            color: #bbb;
+            display: block;
+            margin-bottom: 5px;
+            font-size: 1.1rem;
+            letter-spacing: 1px;
+        }
+
+        @media (max-width: 768px) {
+            h1 { font-size: 2rem; }
+            h2 { font-size: 1.6rem; }
+            .content-box { width: 95%; padding: 25px; margin-bottom: 80px; }
+            .vocab-grid { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="presentation-container">
+        
+        <!-- الشريحة 1: العنوان -->
+        <div class="slide active" style="background-image: url('assets/images/slide2.jpg');">
+            <div class="overlay">
+                <div class="content-box center-text" style="background: rgba(0,0,0,0.6); border: 2px solid var(--primary-gold);">
+                    <i class="fa-solid fa-kaaba fa-4x" style="color: var(--primary-gold); margin-bottom: 25px; display:block;"></i>
+                    <span class="header-meta">التربية الإسلامية: الثانية باك علوم رياضية أ</span>
+                    <span class="header-meta">مدخل الإستجابة</span>
+                    
+                    <h1 style="margin-top: 20px;">الخصائص العامة للشريعة الإسلامية</h1>
+                    <div style="width: 150px; height: 3px; background: var(--primary-gold); margin: 20px auto;"></div>
+                    <p style="font-size: 1.4rem;">عرض تفاعلي شامل</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- الشريحة 2: نصوص الانطلاق (القرآن) -->
+        <div class="slide" style="background-image: url('assets/images/slide2.jpg');">
+            <div class="overlay">
+                <div class="content-box">
+                    <h2><i class="fa-solid fa-book-open"></i> نصوص الانطلاق</h2>
+                    <p>قال الله سبحانه:</p>
+                    <div class="quran-box">
+                        "قُلْ يَا أَيُّهَا النَّاسُ إِنِّي رَسُولُ اللَّهِ إِلَيْكُمْ جَمِيعًا الَّذِي لَهُ مُلْكُ السَّمَاوَاتِ وَالْأَرْضِ ۖ لَا إِلَٰهَ إِلَّا هُوَ يُحْيِي وَيُمِيتُ ۖ فَآمِنُوا بِاللَّهِ وَرَسُولِهِ النَّبِيِّ الْأُمِّيِّ الَّذِي يُؤْمِنُ بِاللَّهِ وَكَلِمَاتِهِ وَاتَّبِعُوهُ لَعَلَّكُمْ تَهْتَدُونَ"
+                        <span class="source">سورة الأعراف الآية 158</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- الشريحة 3: نصوص الانطلاق (الحديث) -->
+        <div class="slide" style="background-image: url('assets/images/slide2.jpg');">
+            <div class="overlay">
+                <div class="content-box">
+                    <h2><i class="fa-solid fa-scroll"></i> نصوص الانطلاق (السنة النبوية)</h2>
+                    <p>عن أبي هريرة رضي الله عنه أن رسول الله صلى الله عليه وسلم قال:</p>
+                    <div class="hadith-box">
+                        "إن الدين يسر، ولن يشاد الدين أحد إلا غلبه، فسددوا وقاربوا، وأبشروا، واستعينوا بالغدوة والروحة وشيء من الدلجة"
+                        <span class="source">صحيح البخاري</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- الشريحة 4: المفاهيم الأساسية -->
+        <div class="slide" style="background-image: url('assets/images/slide2.jpg');">
+            <div class="overlay">
+                <div class="content-box">
+                    <h2><i class="fa-solid fa-language"></i> المفاهيم الأساسية</h2>
+                    <div class="vocab-grid">
+                        <div class="vocab-item"><span class="vocab-term">كلماته:</span> أوامر الله وأحكامه في القرآن الكريم.</div>
+                        <div class="vocab-item"><span class="vocab-term">اتبعوه:</span> اعملوا بأوامره واجتنبوا نواهيه.</div>
+                        <div class="vocab-item"><span class="vocab-term">تهتدون:</span> ترشدون وتوفقون إلى طريق الحق.</div>
+                        <div class="vocab-item"><span class="vocab-term">يسر:</span> سهل وميسر وضده العسر.</div>
+                        <div class="vocab-item"><span class="vocab-term">يشاد:</span> المبالغة والمغالبة والزيادة.</div>
+                        <div class="vocab-item"><span class="vocab-term">فسددوا وقاربوا:</span> السداد والإصابة، أو المقاربة.</div>
+                        <div class="vocab-item"><span class="vocab-term">أبشروا:</span> الخبر السار والمفرح من الله.</div>
+                        <div class="vocab-item"><span class="vocab-term">الغدوة/الروحة/الدلجة:</span> العبادة (صباحاً / مساءً / ليلاً).</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- الشريحة 5: الأحكام الشرعية -->
+        <div class="slide" style="background-image: url('assets/images/slide2.jpg');">
+            <div class="overlay">
+                <div class="content-box">
+                    <h2><i class="fa-solid fa-gavel"></i> الأحكام الشرعية للآيات القرآنية</h2>
+                    <ul>
+                        <li>تؤكد الآية القرآنية على عالمية الشريعة الإسلامية، وأن الرسول صلى الله عليه وسلم بعثه الله إلى الناس قاطبة، ومن أهم ما جاء به وجوب الإيمان بالله وإتباع رسوله.</li>
+                        <li>تنبيه الله تعالى للمغالين والمتشددين في دين الله بالغلبة والقهر؛ لأن أساس الدين الإسلامي اليسر ورفع الحرج عن الناس.</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- الشريحة 6: مفاهيم الدرس العامة -->
+        <div class="slide" style="background-image: url('assets/images/slide2.jpg');">
+            <div class="overlay">
+                <div class="content-box">
+                    <h2><i class="fa-solid fa-lightbulb"></i> الإسلام دين الله للعالمين</h2>
+                    
+                    <h3>مفهوم الخصائص العامة للإسلام</h3>
+                    <p>الميزات والصفات التي ينفرد بها دين الإسلام عن غيره من الديانات والمناهج الأخرى، والهدف منها هو تحقيق مصالح العباد في الدنيا والآخرة.</p>
+
+                    <div style="height: 1px; background: rgba(255,255,255,0.2); margin: 20px 0;"></div>
+
+                    <h3>مفهوم الشريعة الإسلامية</h3>
+                    <p>هي أحكام الله تعالى المنزلة على المكلفين، من عقائد وعبادات ومعاملات وأخلاق، مأمورون بإتباعها طبقاً لما جاء في القرآن الكريم والسنة النبوية.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- الشريحة 7: الربانية -->
+        <div class="slide" style="background-image: url('assets/images/slide2.jpg');">
+            <div class="overlay">
+                <div class="content-box">
+                    <h2>1. الإسلام رباني المصدر والوجهة</h2>
+                    <h3>مفهوم الربانية</h3>
+                    <p>الربانية هي انتساب أحكام الشريعة الإسلامية إلى الرب جل وعلا، والأمر بتبليغها من طرف رسوله الكريم.</p>
+                    <div class="quran-box">
+                        "إِنَّا أَنزَلْنَا إِلَيْكَ الْكِتَابَ بِالْحَقِّ لِتَحْكُمَ بَيْنَ النَّاسِ بِمَا أَرَاكَ اللَّهُ"
+                    </div>
+                    <h3>من ثمرات الربانية</h3>
+                    <ul>
+                        <li>سلامة الدين الإسلامي من النقص والخلل والتعارض.</li>
+                        <li>حفظه من التحريف والتزوير والزيادة والنقصان.</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- الشريحة 8: الشمول -->
+        <div class="slide" style="background-image: url('assets/images/slide2.jpg');">
+            <div class="overlay">
+                <div class="content-box">
+                    <h2>2. الإسلام دين شامل</h2>
+                    <p><strong>معناه:</strong> إحاطة الشريعة الإسلامية بكل مجالات الحياة الدينية والدنيوية والأخروية.</p>
+                    <div class="quran-box">
+                        "وَنَزَّلْنَا عَلَيْكَ الْكِتَابَ تِبْيَانًا لِّكُلِّ شَيْءٍ"
+                    </div>
+                    <p><i class="fa-solid fa-list-check" style="color:var(--primary-gold)"></i> يشمل: العقيدة، العبادة، المعاملات، الأخلاق...</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- الشريحة 9: العالمية -->
+        <div class="slide" style="background-image: url('assets/images/slide2.jpg');">
+            <div class="overlay">
+                <div class="content-box">
+                    <h2>3. الإسلام دين عالمي</h2>
+                    <h3>مفهوم العالمية</h3>
+                    <p>عموم الرسالة الإسلامية على جميع الناس، رغم اختلاف ألوانهم وأجناسهم ولغاتهم.</p>
+                    <div class="quran-box">
+                        "وَمَا أَرْسَلْنَاكَ إِلَّا رَحْمَةً لِّلْعَالَمِينَ"
+                    </div>
+                    <h3>تجليات العالمية</h3>
+                    <ul>
+                        <li>الدين الإسلامي صالح لكل زمان ومكان.</li>
+                        <li>انتشار الإسلام في جميع بقاع العالم.</li>
+                        <li>خطاب الله للجميع: يا أيها الناس - يا بني آدم.</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- الشريحة 10: الوسطية والاعتدال -->
+        <div class="slide" style="background-image: url('assets/images/slide2.jpg');">
+            <div class="overlay">
+                <div class="content-box">
+                    <h2>4. دين الوسطية والاعتدال</h2>
+                    <h3>التوازن</h3>
+                    <p><strong>معناه:</strong> التوسط والاعتدال في تطبيق الأحكام الشرعية بين الدنيا والآخرة وبين العمل والعبادة وبين الروح والجسد... فلا إفراط ولا تفريط.</p>
+                    <div class="quran-box">
+                        "رَبَّنَا آتِنَا فِي الدُّنْيَا حَسَنَةً وَفِي الْآخِرَةِ حَسَنَةً وَقِنَا عَذَابَ النَّارِ"
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- الشريحة 11: اليسر ورفع الحرج -->
+        <div class="slide" style="background-image: url('assets/images/slide2.jpg');">
+            <div class="overlay">
+                <div class="content-box">
+                    <h2>5. الإسلام دين اليسر ورفع الحرج</h2>
+                    <p>هو تطبيق الأحكام الشرعية بصورة معتدلة كما جاءت في كتاب الله وسنة نبيه صلى الله عليه وسلم، من غير تشدد يُحرّم الحلال، ولا تمييع يُحلّل الحرام.</p>
+                    <div class="quran-box">
+                        "يُرِيدُ اللَّهُ بِكُمُ الْيُسْرَ وَلَا يُرِيدُ بِكُمُ الْعُسْرَ"
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- الشريحة 12: الاجتهاد والتجديد -->
+        <div class="slide" style="background-image: url('assets/images/slide2.jpg');">
+            <div class="overlay">
+                <div class="content-box">
+                    <h2>6. الإسلام دين الاجتهاد والتجديد</h2>
+                    <p>إسقاط الأحكام الشرعية على الوقائع المستجدة، غير المذكورة في القرآن الكريم ولا السنة النبوية، وهي عملية خاصة بالعلماء المجتهدين.</p>
+                    <div class="hadith-box">
+                        قال عليه السلام: "إذا حكم الحاكم فاجتهد ثم أصاب فله أجران، وإذا حكم فاجتهد ثم أخطأ فله أجر"
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- الشريحة 13: الخاتمة -->
+        <div class="slide" style="background-image: url('assets/images/slide2.jpg');">
+            <div class="overlay">
+                <div class="content-box center-text">
+                    <i class="fa-solid fa-check-circle fa-5x" style="color: var(--primary-gold); margin-bottom: 25px;"></i>
+                    <h1>تم بحمد الله</h1>
+                    <p style="font-size: 1.5rem;">شكراً لحسن انتباهكم</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- شريط التقدم -->
+        <div class="progress-container">
+            <div class="progress-bar" id="progressBar"></div>
+        </div>
+
+        <!-- أزرار التحكم -->
+        <div class="controls">
+            <button class="btn" id="prevBtn" onclick="prevSlide()">
+                <i class="fa-solid fa-chevron-right"></i> السابق
+            </button>
+            <button class="btn" id="nextBtn" onclick="nextSlide()">
+                التالي <i class="fa-solid fa-chevron-left"></i>
+            </button>
+        </div>
+    </div>
+
+    <script>
+        let currentSlide = 0;
+        const slides = document.querySelectorAll('.slide');
+        const progressBar = document.getElementById('progressBar');
+        const prevBtn = document.getElementById('prevBtn');
+        const nextBtn = document.getElementById('nextBtn');
+        const totalSlides = slides.length;
+
+        function updateSlide() {
+            slides.forEach((slide) => {
+                slide.classList.remove('active');
+            });
+
+            slides[currentSlide].classList.add('active');
+            
+            const overlay = slides[currentSlide].querySelector('.overlay');
+            if(overlay) overlay.scrollTop = 0;
+
+            const progress = ((currentSlide + 1) / totalSlides) * 100;
+            progressBar.style.width = progress + '%';
+
+            prevBtn.disabled = currentSlide === 0;
+            
+            if (currentSlide === totalSlides - 1) {
+                nextBtn.innerHTML = 'إعادة <i class="fa-solid fa-rotate-right"></i>';
+            } else {
+                nextBtn.innerHTML = 'التالي <i class="fa-solid fa-chevron-left"></i>';
+            }
+        }
+
+        function nextSlide() {
+            if (currentSlide < totalSlides - 1) {
+                currentSlide++;
+            } else {
+                currentSlide = 0;
+            }
+            updateSlide();
+        }
+
+        function prevSlide() {
+            if (currentSlide > 0) {
+                currentSlide--;
+                updateSlide();
+            }
+        }
+
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowLeft' || e.code === 'Space') {
+                nextSlide();
+            } else if (e.key === 'ArrowRight') {
+                prevSlide();
+            }
+        });
+
+        updateSlide();
+    </script>
+</body>
+</html>
